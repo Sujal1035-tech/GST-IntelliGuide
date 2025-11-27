@@ -49,7 +49,7 @@
 │  Frontend (HTML/CSS/JS + WebSocket)     │
 │   • Login/Register  • Chat Interface    │
 └─────────────────────────────────────────┘
-                  ↕ HTTP/WS
+                  ↕ WS
 ┌─────────────────────────────────────────┐
 │         FastAPI Backend                 │
 │  ┌──────────┐  ┌──────────┐  ┌───────┐ │
@@ -59,7 +59,7 @@
 └─────────────────────────────────────────┘
                   ↕
 ┌─────────────────────────────────────────┐
-│  MongoDB        ChromaDB/Atlas Vector   │
+│  MongoDB                FAISS           │
 │  • users        • Document Embeddings   │
 │  • chats        • Semantic Search       │
 │  • messages                             │
@@ -232,3 +232,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Built with ❤️ for simplifying GST compliance**
 
 </div>
+
