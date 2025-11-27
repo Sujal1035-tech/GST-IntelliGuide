@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GST RAG Chatbot</title>
+  <link rel="stylesheet" href="/frontend/style.css">
+</head>
+<body>
+
+<div class="app-root">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="user-avatar" id="user-avatar">U</div>
+      <div class="user-info">
+        <div class="user-name" id="user-name">User</div>
+        <div class="user-email" id="user-email">email@example.com</div>
+      </div>
+    </div>
+
+    <button id="new-chat-btn" class="new-chat-btn">+ New chat</button>
+
+    <div class="chats-list" id="chats-list">
+      <!-- chats loaded here -->
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="dark-toggle">
+        <label class="switch">
+          <input type="checkbox" id="dark-mode-toggle">
+          <span class="slider"></span>
+        </label>
+        <span>Dark mode</span>
+      </div>
+      <button id="logout-btn" class="logout-btn">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Main chat area -->
+  <main class="chat-main">
+    <header class="chat-header">
+      <h2 id="chat-title">Select a chat</h2>
+    </header>
+
+    <section id="chat-box" class="chat-box">
+      <!-- messages here -->
+    </section>
+
+    <div class="typing-indicator" id="typing-indicator" style="display:none;">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
+
+    <footer class="chat-input-area">
+      <input type="text" id="message-input" placeholder="Ask something about GST..." />
+      <button id="send-btn">Send</button>
+    </footer>
+  </main>
+
+</div>
+
+<script src="/frontend/chat.js"></script>
+</body>
+</html>
