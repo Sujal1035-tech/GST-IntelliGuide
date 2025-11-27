@@ -201,7 +201,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Sujal Khant** - AI Engineer | ML Specialist
+**Sujal Khant** 
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/Sujal1035-tech)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](www.linkedin.com/in/sujal-khant-234931356)
@@ -216,4 +216,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 </div>
 
 ```
+
 
