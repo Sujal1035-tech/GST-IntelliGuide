@@ -191,25 +191,7 @@ GST-IntelliGuide/
 ├── .gitignore               # Git ignore rules
 ├── requirements.txt         # Python dependencies
 └── README.md                # Documentation
-```
 
-
-## 🧪 Testing
-
-```bash
-# Run tests
-pytest tests/ -v --cov=backend
-
-# Manual testing checklist
-- User registration/login
-- JWT authentication
-- Create/delete chats
-- WebSocket messaging
-- RAG retrieval accuracy
-- Session persistence
-```
-
----
 
 ## 📄 License
 
@@ -232,4 +214,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Built with ❤️ for simplifying GST compliance**
 
 </div>
+
 
