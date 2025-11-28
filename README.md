@@ -36,7 +36,7 @@
 - **💬 Real-Time Chat**: WebSocket communication with streaming responses
 - **🧠 RAG Pipeline**: Vector database semantic search with LangChain integration
 - **📚 Multi-Chat Management**: Create, view, and manage multiple conversations
-- **🎨 Modern UI**: Streamlit interface with auto-scroll and chat bubbles
+- **🎨 Modern UI**: Using html,css and javascript
 - **📊 Persistent Storage**: MongoDB for users, chats, and message history
 - **🔍 Source Attribution**: Transparent citations from GST documents
 
@@ -216,6 +216,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 </div>
 
 ```
+
 
 
 
