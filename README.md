@@ -111,7 +111,7 @@ python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # Install dependencies
-pip install fastapi uvicorn pymongo motor langchain chromadb
+pip install fastapi uvicorn pymongo motor langchain FAISSDB
 pip install websockets pypdf sentence-transformers
 pip install python-jose[cryptography] passlib[bcrypt] python-dotenv
 
@@ -216,5 +216,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 </div>
 
 ```
+
 
 
