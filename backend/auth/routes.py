@@ -1,53 +1,57 @@
 from fastapi import APIRouter, HTTPException, Response
+from pydantic import BaseModel
 from backend.db.mongo import users_collection
 from backend.auth.utils import hash_password, verify_password
 from backend.auth.jwt_handler import create_access_token
 
 router = APIRouter()
 
+# -----------------------------------------------------------
+# 1️⃣ Request Model for Registration (REQUIRED!)
+# -----------------------------------------------------------
+class RegisterRequest(BaseModel):
+    name: str
+    email: str
+    password: str
 
-# REGISTER USER
 
+# -----------------------------------------------------------
+# 2️⃣ REGISTER USER
+# -----------------------------------------------------------
 @router.post("/register")
-def register_user(email: str, username: str, password: str):
+def register_user(payload: RegisterRequest):
 
-    # Check if user already exists
-    existing = users_collection.find_one({"email": email})
+    existing = users_collection.find_one({"email": payload.email})
     if existing:
         raise HTTPException(status_code=400, detail="User already exists")
 
-    # Hash password
-    hashed_pw = hash_password(password)
+    hashed_pw = hash_password(payload.password)
 
-    # Insert user
     users_collection.insert_one({
-        "email": email,
-        "username": username,
+        "email": payload.email,
+        "username": payload.name,
         "password_hash": hashed_pw,
     })
 
     return {"message": "User registered successfully"}
 
 
-
-# LOGIN USER
-
+# -----------------------------------------------------------
+# 3️⃣ LOGIN USER
+# -----------------------------------------------------------
 @router.post("/login")
 def login_user(response: Response, email: str, password: str):
 
-    # Find the user
     user = users_collection.find_one({"email": email})
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    # Verify password
     if not verify_password(password, user["password_hash"]):
         raise HTTPException(status_code=401, detail="Invalid credentials")
-
-    # Create JWT token
+    
     token = create_access_token({"user_id": str(user["_id"])})
 
-    # Save token in HTTP-only cookie
+    # set secure cookie
     response.set_cookie(
         key="access_token",
         value=token,
@@ -57,6 +61,10 @@ def login_user(response: Response, email: str, password: str):
 
     return {"message": "Login successful"}
 
+
+# -----------------------------------------------------------
+# 4️⃣ LOGOUT USER
+# -----------------------------------------------------------
 @router.post("/logout")
 def logout_user(response: Response):
     response.delete_cookie("access_token")

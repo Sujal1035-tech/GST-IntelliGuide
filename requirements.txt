@@ -2,7 +2,7 @@ fastapi
 uvicorn
 langchain
 streamlit
-passlib[bcrypt]
+passlib[bcrypt,argon2]
 python-jose
 python-dotenv
 langchain_core
@@ -12,3 +12,7 @@ langchain-groq
 faiss-cpu 
 sentence-transformers 
 pypdf
+pymongo
+PyJWT
+langchain-text-splitters
+websockets 

@@ -28,8 +28,6 @@ def create_chat(
 
     return chat_data
 
-
-
 @router.get("/")
 def list_chats(current_user=Depends(get_current_user)):
     user_id = str(current_user["_id"])

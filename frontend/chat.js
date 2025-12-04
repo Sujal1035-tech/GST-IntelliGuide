@@ -1,4 +1,5 @@
-const API_BASE = "http://localhost:8001";
+// Use current domain for API calls (works both locally and in production)
+const API_BASE = window.location.origin;
 
 let currentChatId = null;
 let currentSocket = null;
@@ -130,7 +131,9 @@ function connectWebSocket(chatId) {
     currentSocket.close();
   }
 
-  const wsUrl = `ws://localhost:8001/ws/chat/${chatId}`;
+  // Use wss:// for HTTPS, ws:// for HTTP
+  const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsUrl = `${wsProtocol}//${window.location.host}/ws/chat/${chatId}`;
   const ws = new WebSocket(wsUrl);
   currentSocket = ws;
 

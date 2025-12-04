@@ -29,8 +29,6 @@ def get_current_user(request: Request):
 
     return user
 
-
-# ✔ NEW — WS-compatible version
 async def get_current_user_ws(websocket: WebSocket):
     token = websocket.cookies.get("access_token")
     if not token:

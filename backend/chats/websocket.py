@@ -36,7 +36,6 @@ rag_chain = get_rag_chain()
 async def websocket_chat_endpoint(websocket: WebSocket, chat_id: str):
     """Full WebSocket GST Chat"""
 
-    # 1. Authenticate user via cookies
     current_user = await get_current_user_ws(websocket)
 
     # 2. Validate chat ID
@@ -60,7 +59,6 @@ async def websocket_chat_endpoint(websocket: WebSocket, chat_id: str):
 
     try:
         while True:
-            # 4. Receive user message
             user_text = await websocket.receive_text()
 
             messages_collection.insert_one({
@@ -71,18 +69,14 @@ async def websocket_chat_endpoint(websocket: WebSocket, chat_id: str):
                 "timestamp": datetime.utcnow(),
             })
 
-            # 5. Run RAG
             try:
-                # Assuming this is now correct
                 answer = rag_chain.invoke({"question": user_text}) 
 
             except Exception as e:
-                # ⚠️ CRITICAL DEBUG CHANGE
                 print("--- RAG CHAIN INVOCATION ERROR ---")
-                traceback.print_exc() # Prints the full error traceback to your terminal
+                traceback.print_exc()
                 print("-------------------------------------")
-                
-                # Show the error in the chat window for immediate feedback
+                   
                 answer = f"Error generating answer. Check console for: {e.__class__.__name__}" 
 
             if not answer:
@@ -97,7 +91,6 @@ async def websocket_chat_endpoint(websocket: WebSocket, chat_id: str):
                 "timestamp": datetime.utcnow(),
             })
 
-            # 7. Send bot reply
             await manager.send_message(chat_id, answer)
 
     except WebSocketDisconnect:

@@ -1,4 +1,5 @@
-const API_BASE = "http://localhost:8001";
+// Use current domain for API calls (works both locally and in production)
+const API_BASE = window.location.origin;
 
 document.getElementById("login-btn").addEventListener("click", loginUser);
 
