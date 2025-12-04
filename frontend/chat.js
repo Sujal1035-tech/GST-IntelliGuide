@@ -41,12 +41,38 @@ function addMessage(text, sender = "user", timestamp = null) {
 
   const bubble = document.createElement("div");
   bubble.classList.add("bubble");
-  bubble.textContent = text;
+
+  // For bot messages, render markdown-like formatting
+  if (sender === "bot") {
+    bubble.innerHTML = formatBotMessage(text);
+  } else {
+    bubble.textContent = text;
+  }
 
   row.appendChild(meta);
   row.appendChild(bubble);
   chatBoxEl.appendChild(row);
   chatBoxEl.scrollTop = chatBoxEl.scrollHeight;
+}
+
+// Format bot message with basic markdown rendering
+function formatBotMessage(text) {
+  // Escape HTML to prevent XSS
+  let formatted = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  // Convert **text** to bold
+  formatted = formatted.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+  // Convert newlines to <br>
+  formatted = formatted.replace(/\n/g, "<br>");
+
+  // Style bullet points
+  formatted = formatted.replace(/• /g, '<span class="bullet">•</span> ');
+
+  return formatted;
 }
 
 // ---------- Dark mode ----------

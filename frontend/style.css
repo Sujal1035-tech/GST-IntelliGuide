@@ -767,3 +767,33 @@ button {
 input {
   font-family: inherit;
 }
+/* ----------------------------------------------------------
+   🤖 BOT MESSAGE FORMATTING
+-----------------------------------------------------------*/
+
+.bot-message .bubble strong {
+  color: var(--accent-solid);
+  font-weight: 700;
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+.bot-message .bubble strong:first-child {
+  margin-top: 0;
+}
+
+.bot-message .bubble .bullet {
+  color: var(--accent-solid);
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.bot-message .bubble {
+  max-width: 85%;
+  line-height: 1.8;
+}
+
+body.dark .bot-message .bubble strong {
+  color: #a5b4fc;
+}

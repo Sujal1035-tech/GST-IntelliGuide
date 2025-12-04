@@ -7,6 +7,7 @@ from fastapi import WebSocket, WebSocketDisconnect
 from backend.auth.deps import get_current_user_ws
 from backend.db.mongo import chats_collection, messages_collection
 from backend.rag.rag_chain import get_rag_chain
+from backend.rag.response_formatter import format_gst_response
 
 
 class WebSocketConnectionManager:
@@ -30,7 +31,18 @@ class WebSocketConnectionManager:
 
 
 manager = WebSocketConnectionManager()
-rag_chain = get_rag_chain()
+
+# Lazy loading - don't load RAG chain at startup
+_rag_chain = None
+
+def get_rag_chain_cached():
+    """Get RAG chain with lazy loading to avoid blocking startup"""
+    global _rag_chain
+    if _rag_chain is None:
+        print("🔄 Loading RAG chain (first time, may take 30-60 seconds)...")
+        _rag_chain = get_rag_chain()
+        print("✅ RAG chain loaded successfully!")
+    return _rag_chain
 
 
 async def websocket_chat_endpoint(websocket: WebSocket, chat_id: str):
@@ -70,6 +82,8 @@ async def websocket_chat_endpoint(websocket: WebSocket, chat_id: str):
             })
 
             try:
+                # Use lazy-loaded RAG chain
+                rag_chain = get_rag_chain_cached()
                 answer = rag_chain.invoke({"question": user_text}) 
 
             except Exception as e:
@@ -81,6 +95,9 @@ async def websocket_chat_endpoint(websocket: WebSocket, chat_id: str):
 
             if not answer:
                 answer = "I could not find relevant GST information."
+            
+            # Format the response to ensure structured output
+            answer = format_gst_response(answer)
 
             # 6. Save bot message
             messages_collection.insert_one({

@@ -28,23 +28,47 @@ def get_rag_chain():
         temperature=0.0
     )
 
-    prompt = ChatPromptTemplate.from_template("""
-You are an expert GST (Goods and Services Tax) consultant for India. Your role is to provide accurate, helpful answers based solely on the provided context.
+    prompt = ChatPromptTemplate.from_template("""You are a GST Expert for India. Answer using the provided context documents.
 
-**Instructions:**
-1. Answer questions using ONLY the information from the context below
-2. If the context contains relevant information, provide a clear, detailed explanation
-3. If the answer is not in the context, respond: "I don't have information about this in the available GST documents. Please consult with a tax professional or refer to official GST resources."
-4. Be specific and cite relevant sections, rules, or forms when mentioned in the context
-5. Use simple language and explain technical terms when possible
-6. If the question is partially answered, provide what you know and mention what's missing
+CRITICAL: Your response MUST follow this EXACT format. Do NOT deviate.
 
-Context:
+Format your response EXACTLY like this (copy this structure):
+
+**🔹 Meaning / Definition**
+• [Write 1-2 line definition here]
+
+**🔹 When it Applies**
+• [Bullet point 1]
+• [Bullet point 2]
+• [Bullet point 3]
+
+**🔹 Rules / Conditions**
+• [Rule 1 with section reference if available]
+• [Rule 2]
+• [Rule 3]
+
+**🔹 Example**
+• [Line 1 of example]
+• [Line 2 of example]
+• [Line 3 of example]
+
+**🔹 Key Takeaway**
+• [One sentence summary]
+
+RULES:
+1. ALWAYS start with **🔹 Meaning / Definition**
+2. ALWAYS include all 5 sections in order
+3. Use bullet points (•) for EVERY point
+4. NO long paragraphs - break into bullets
+5. If question is not GST-related, respond: "I don't know"
+
+Context from GST documents:
 {context}
 
-Question:
+User Question:
 {question}
-""")
+
+Your structured response:""")
 
     rag_chain = (
         {

@@ -1,64 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>GST RAG Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GST IntelliGuide - AI Tax Consultant</title>
   <link rel="stylesheet" href="/frontend/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-<div class="app-root">
+  <div class="app-root">
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="user-avatar" id="user-avatar">U</div>
-      <div class="user-info">
-        <div class="user-name" id="user-name">User</div>
-        <div class="user-email" id="user-email">email@example.com</div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-section">
+          <div class="logo-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span class="logo-title">GST IntelliGuide</span>
+            <span class="logo-subtitle">AI Tax Consultant</span>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <button id="new-chat-btn" class="new-chat-btn">+ New chat</button>
-
-    <div class="chats-list" id="chats-list">
-      <!-- chats loaded here -->
-    </div>
-
-    <div class="sidebar-footer">
-      <div class="dark-toggle">
-        <label class="switch">
-          <input type="checkbox" id="dark-mode-toggle">
-          <span class="slider"></span>
-        </label>
-        <span>Dark mode</span>
+      <div class="user-section">
+        <div class="user-avatar" id="user-avatar">U</div>
+        <div class="user-info">
+          <div class="user-name" id="user-name">GST User</div>
+          <div class="user-email" id="user-email">user@example.com</div>
+        </div>
       </div>
-      <button id="logout-btn" class="logout-btn">Logout</button>
-    </div>
-  </aside>
 
-  <!-- Main chat area -->
-  <main class="chat-main">
-    <header class="chat-header">
-      <h2 id="chat-title">Select a chat</h2>
-    </header>
+      <button id="new-chat-btn" class="new-chat-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        New Conversation
+      </button>
 
-    <section id="chat-box" class="chat-box">
-      <!-- messages here -->
-    </section>
+      <div class="section-label">Recent Chats</div>
+      <div class="chats-list" id="chats-list">
+        <!-- chats loaded here -->
+      </div>
 
-    <div class="typing-indicator" id="typing-indicator" style="display:none;">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    </div>
+      <div class="sidebar-footer">
+        <div class="dark-toggle">
+          <label class="switch">
+            <input type="checkbox" id="dark-mode-toggle">
+            <span class="slider"></span>
+          </label>
+          <span>Dark mode</span>
+        </div>
+        <button id="logout-btn" class="logout-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Logout
+        </button>
+      </div>
+    </aside>
 
-    <footer class="chat-input-area">
-      <input type="text" id="message-input" placeholder="Ask something about GST..." />
-      <button id="send-btn">Send</button>
-    </footer>
-  </main>
+    <!-- Main chat area -->
+    <main class="chat-main">
+      <header class="chat-header">
+        <div class="chat-header-left">
+          <div class="chat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+          <div class="chat-header-info">
+            <h2 id="chat-title">Select a conversation</h2>
+            <span class="chat-status">
+              <span class="status-dot"></span>
+              AI Assistant Online
+            </span>
+          </div>
+        </div>
+        <div class="chat-header-right">
+          <span class="powered-by">Powered by Llama 3.3</span>
+        </div>
+      </header>
 
-</div>
+      <section id="chat-box" class="chat-box">
+        <!-- Welcome message when no chat selected -->
+        <div class="welcome-message" id="welcome-message">
+          <div class="welcome-icon">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <h3>Welcome to GST IntelliGuide</h3>
+          <p>Your AI-powered GST consultant. Ask any question about Indian GST laws, sections, rules, and compliance.
+          </p>
+          <div class="quick-questions">
+            <span class="quick-label">Try asking:</span>
+            <button class="quick-btn">What is Section 31?</button>
+            <button class="quick-btn">Explain Input Tax Credit</button>
+            <button class="quick-btn">GST registration process</button>
+          </div>
+        </div>
+      </section>
 
-<script src="/frontend/chat.js"></script>
+      <div class="typing-indicator" id="typing-indicator" style="display:none;">
+        <div class="typing-content">
+          <div class="typing-avatar">AI</div>
+          <div class="typing-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <span class="typing-text">GST AI is thinking...</span>
+        </div>
+      </div>
+
+      <footer class="chat-input-area">
+        <div class="input-container">
+          <input type="text" id="message-input" placeholder="Ask anything about GST..." />
+          <button id="send-btn" class="send-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            <span>Send</span>
+          </button>
+        </div>
+        <div class="input-footer">
+          <span class="disclaimer">GST IntelliGuide may make mistakes. Verify important information with official
+            sources.</span>
+        </div>
+      </footer>
+    </main>
+
+  </div>
+
+  <script src="/frontend/chat.js"></script>
 </body>
+
 </html>
