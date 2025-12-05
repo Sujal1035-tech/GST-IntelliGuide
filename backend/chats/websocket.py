@@ -6,7 +6,7 @@ from fastapi import WebSocket, WebSocketDisconnect
 
 from backend.auth.deps import get_current_user_ws
 from backend.db.mongo import chats_collection, messages_collection
-from backend.rag.rag_chain import get_rag_chain
+from backend.rag.rag_chain import get_rag_response
 from backend.rag.response_formatter import format_gst_response
 
 
@@ -32,25 +32,15 @@ class WebSocketConnectionManager:
 
 manager = WebSocketConnectionManager()
 
-# Lazy loading - don't load RAG chain at startup
-_rag_chain = None
-
-def get_rag_chain_cached():
-    """Get RAG chain with lazy loading to avoid blocking startup"""
-    global _rag_chain
-    if _rag_chain is None:
-        print("🔄 Loading RAG chain (first time, may take 30-60 seconds)...")
-        _rag_chain = get_rag_chain()
-        print("✅ RAG chain loaded successfully!")
-    return _rag_chain
-
 
 async def websocket_chat_endpoint(websocket: WebSocket, chat_id: str):
-    """Full WebSocket GST Chat"""
-
+    """
+    WebSocket endpoint for GST Chat.
+    Uses LangChain ConversationBufferWindowMemory with MongoDB persistence.
+    """
     current_user = await get_current_user_ws(websocket)
 
-    # 2. Validate chat ID
+    # Validate chat ID
     try:
         chat_obj_id = ObjectId(chat_id)
     except:
@@ -66,13 +56,14 @@ async def websocket_chat_endpoint(websocket: WebSocket, chat_id: str):
         await websocket.close(code=4403)
         return
 
-    # 3. Accept connection
+    # Accept connection
     await manager.connect(chat_id, websocket)
 
     try:
         while True:
             user_text = await websocket.receive_text()
 
+            # Save user message to messages collection (for UI display)
             messages_collection.insert_one({
                 "chat_id": chat_id,
                 "user_id": str(current_user["_id"]),
@@ -82,24 +73,22 @@ async def websocket_chat_endpoint(websocket: WebSocket, chat_id: str):
             })
 
             try:
-                # Use lazy-loaded RAG chain
-                rag_chain = get_rag_chain_cached()
-                answer = rag_chain.invoke({"question": user_text}) 
+                # Get response using LangChain memory (auto-manages history!)
+                answer = get_rag_response(chat_id, user_text)
 
             except Exception as e:
-                print("--- RAG CHAIN INVOCATION ERROR ---")
+                print("--- RAG ERROR ---")
                 traceback.print_exc()
-                print("-------------------------------------")
-                   
-                answer = f"Error generating answer. Check console for: {e.__class__.__name__}" 
+                print("-----------------")
+                answer = f"Error: {e.__class__.__name__}"
 
             if not answer:
                 answer = "I could not find relevant GST information."
-            
-            # Format the response to ensure structured output
+
+            # Format response
             answer = format_gst_response(answer)
 
-            # 6. Save bot message
+            # Save bot message to messages collection (for UI display)
             messages_collection.insert_one({
                 "chat_id": chat_id,
                 "user_id": str(current_user["_id"]),

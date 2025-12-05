@@ -15,4 +15,4 @@ pypdf
 pymongo
 PyJWT
 langchain-text-splitters
-websockets 
+websockets
