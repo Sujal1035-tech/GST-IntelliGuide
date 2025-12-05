@@ -10,7 +10,7 @@
 
 ### [**Try Live Demo**](https://gst-intelliguide-latest.onrender.com)
 
-*Note: Deployed on Render free tier - first load may take 30-50 seconds*
+*Note: Deployed on Render free tier - first load may take 1 min*
 
 </div>
 
@@ -143,3 +143,4 @@ Email: sujalkhant4@gmail.com
 Built to simplify GST compliance for everyone
 
 </div>
+
