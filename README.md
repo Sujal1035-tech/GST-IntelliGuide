@@ -70,26 +70,6 @@ SECRET_KEY=your-secure-secret-key
 OPENAI_API_KEY=your-groq-api-key
 ```
 
-Run with Docker:
-
-```bash
-docker-compose up --build
-```
-
-Access at http://localhost:8000 (backend) and http://localhost:8080 (frontend).
-
-## Architecture
-
-The application uses a multi-layered architecture:
-
-**RAG Pipeline** - User queries are converted to embeddings and matched against pre-indexed GST documents in FAISS. Retrieved context is combined with the query and sent to GroqAI for response generation.
-
-**Memory Management** - LangChain's ConversationBufferWindowMemory maintains the last N messages in each chat session, allowing the AI to reference previous exchanges and maintain conversation flow.
-
-**Real-time Communication** - WebSocket connections handle bidirectional streaming between client and server, enabling token-by-token response delivery.
-
-**Data Persistence** - MongoDB stores user credentials, chat sessions, and message history with proper indexing for efficient retrieval.
-
 ## Project Structure
 
 ```
@@ -120,10 +100,6 @@ The application is deployed at [gst-intelliguide-latest.onrender.com](https://gs
 
 To deploy your own instance, configure MongoDB Atlas, create a Render web service from your GitHub repository, set environment variables, and enable auto-deploy.
 
-## Contributing
-
-Fork the repository, create a feature branch, implement changes, and submit a pull request. Ensure code follows existing patterns and includes proper error handling.
-
 ## License
 
 MIT License - See LICENSE file for details.
@@ -143,4 +119,5 @@ Email: sujalkhant4@gmail.com
 Built to simplify GST compliance for everyone
 
 </div>
+
 
