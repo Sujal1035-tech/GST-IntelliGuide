@@ -38,7 +38,7 @@ The application searches through official GST documents and provides context-awa
 
 ## Technology Stack
 
-**Backend**: FastAPI, LangChain (with ConversationBufferWindowMemory), FAISS, GroqAI
+**Backend**: FastAPI, LangChain, FAISS, GroqAI
 
 **Frontend**: Vanilla JavaScript, HTML5, CSS3
 
@@ -119,5 +119,6 @@ Email: sujalkhant4@gmail.com
 Built to simplify GST compliance for everyone
 
 </div>
+
 
 
