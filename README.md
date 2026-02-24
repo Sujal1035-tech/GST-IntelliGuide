@@ -26,7 +26,7 @@ The application searches through official GST documents and provides context-awa
 
 **Contextual Understanding** - Uses semantic search with FAISS vector database to understand query intent, not just keywords. Powered by RAG architecture for accurate, document-backed responses.
 
-**Conversation Memory** - Implements LangChain's ConversationBufferWindowMemory to maintain context across messages within a chat session, enabling natural multi-turn conversations.
+**Conversation Memory** - Implements LangChain's ConversationBufferWindowMemory for long term storage we implement mongoDB to maintain context across messages within a chat session, enabling natural multi-turn conversations.
 
 **Real-time Streaming** - WebSocket-based architecture delivers responses as they're generated, providing immediate feedback and a smooth user experience.
 
@@ -119,6 +119,7 @@ Email: sujalkhant4@gmail.com
 Built to simplify GST compliance for everyone
 
 </div>
+
 
 
 
